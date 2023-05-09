@@ -8,7 +8,7 @@ var slidesCount = sliderImages.length;
 var currentSlide = 1;
 
 // get number of slide and string
-var slideNumberElement = document.getElementById('slide-number');
+var slideNumberElement = document.getElementById('slider-number');
 
 // previous and next butons
 var nextButton = document.getElementById('next');
@@ -47,30 +47,54 @@ var paginationCreatedUL = document.getElementById('pagination-ul')
 
 var paginationsBullets = Array.from(document.querySelectorAll('#pagination-ul li'));
 
+//Loop Through All Bullets Items
+for(var i = 0; i < paginationsBullets.length; i++) {
+
+       paginationsBullets[i].onclick = function () {
+
+              currentSlide = (this.getAttribute('data-index'))
+
+              theChecker();
+       }
+
+}
 
 function nextSlide() {
-       console.log('next')
+       if (nextButton.classList.contains('disabled')) {
+              return false;
+       }else{
+              currentSlide++;
+              theChecker();
+       }
 }
 
 function prevSlide() {
-       console.log('prev')
+       if (prevButton.classList.contains('disabled')) {
+              return false;
+       }else{
+              currentSlide--;
+              theChecker();
+       }
 }
-theChecker();
+
 //create checker function
 function theChecker() {
        //set The Slide Number
        slideNumberElement.textContent = 'Slide #' + (currentSlide) + ' of ' + (slidesCount);
 
+       //removeAllActive();
+       removeAllActive()
        //set Active Class on Current ele
-       sliderImages[currentSlide-1].classList.add('active');
+       sliderImages[currentSlide - 1].classList.add('active');
        
        //set Active Class on Current pagination
-       paginationCreatedUL.children[currentSlide-1].classList.add('active');
+       paginationCreatedUL.children[currentSlide - 1].classList.add('active');
 
        //check if Current Slide is the First
-       if (currentSlide==1) {
+       if (currentSlide == 1) {
               //Add Disabled Class on Prev button
               prevButton.classList.add('disabled')
+              
        } else{
               //Remove Disabled Class on Prev button
               prevButton.classList.remove('disabled')
@@ -84,23 +108,19 @@ function theChecker() {
               //Remove Disabled Class on Prev button
               nextButton.classList.remove('disabled')
        }
-
        
-       removeAllActive();
-
-       function removeAllActive() {
-
-              //Loop Through Images
-              sliderImages.forEach(function (img) {
-                     img.classList.remove('active')
-              })
-              //Loop Through Pagination Bullets
-              paginationsBullets.forEach(function (bullet) {
-
-                     bullet.classList.remove('active');
-              })
-
-       }
-
-
 }
+
+function removeAllActive() {
+       //Loop Through Images
+       sliderImages.forEach(function (img) {
+              img.classList.remove('active')
+       })
+       //Loop Through Pagination Bullets
+       paginationsBullets.forEach(function (bullet) {
+
+              bullet.classList.remove('active');
+       })
+}
+
+theChecker()
