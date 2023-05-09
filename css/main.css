@@ -26,6 +26,7 @@ img {
   border-style: none;
   width: 400px;
   height: 400px;
+  display: none;
 }
 
 .slider-container img.active {
